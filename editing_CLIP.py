@@ -162,7 +162,7 @@ parser.add_argument("--batch_size", type=int, default=4, help="batch size for ed
 parser.add_argument("--T", type=int, default=1000, help="total diffusion step")
 parser.add_argument("--n_train_step", type=int, default=5, help="total step for computing CLIP loss in diffusion process")
 parser.add_argument("--max_num", type=int, default=None, help="maximum number of frames to edit, 1~max_num")
-parser.add_argument("--attribute", type=str, default="beards", required=True, help="attribute name for make folders")
+parser.add_argument("--attribute", type=str, default="beards", required=True, help="attribute name for making folders")
 parser.add_argument("--src_txt", type=str, default="face", required=True, help="neutral text for editing")
 parser.add_argument("--trg_txt", type=str, default="face with beard", required=True, help="target text for editing")
 parser.add_argument("--lr", type=float, default=0.0020, help="learning rate")
@@ -241,7 +241,6 @@ inverse_transforms = [
     for quad in quads]            
 
 data = ImageDataset(f'{log_dir}/crop', image_size=conf.img_size, exts=['jpg', 'JPG', 'png'], do_augment=False, sort_names=True, max_num=args.max_num)
-#data = ImageDataset('data_crop', image_size=conf.img_size, exts=['jpg', 'JPG', 'png'], do_augment=False, sort_names=True, max_num=args.max_num)
 dataloader = DataLoader(data, batch_size=args.batch_size, shuffle=False, drop_last=False)
 
 conds = []
@@ -258,7 +257,6 @@ avg_cond = torch.mean(cond, dim=0, keepdim=True)
 
 with torch.no_grad():
     start_img = Image.open(f'{log_dir}/crop/%s.jpg' % images[0][1].split('/')[-1].split('.')[0])
-    #start_img = Image.open('data_crop/%s.jpg' % images[0][1].split('/')[-1].split('.')[0])
     start_img = start_img.convert('RGB')
     if data.transform is not None:
         start_img = data.transform(start_img)
@@ -289,20 +287,20 @@ with torch.no_grad():
     forward_recon_imgs = torch.cat([forward_recon_imgs, start_recon_imgs], axis=0) # [800, 600, 400, 200, 0, -1]
     start_mask = model.ema_model.encoder.face_mask(start_img.unsqueeze(0).to(device))
     
-    # for batch in dataloader:
-    #     imgs = batch['img']
-    #     batch_indices = batch['index']
+    for batch in dataloader:
+        imgs = batch['img']
+        batch_indices = batch['index']
         
-    #     avg_latent = model.ema_model.encoder.forward_with_id(avg_cond.expand(len(imgs), -1), imgs.to(device))
-    #     avg_xT = model.encode_stochastic(imgs.to(device), avg_latent, T=args.T)
-    #     avg_img = model.render(avg_xT, avg_latent, T=args.T)
+        avg_latent = model.ema_model.encoder.forward_with_id(avg_cond.expand(len(imgs), -1), imgs.to(device))
+        avg_xT = model.encode_stochastic(imgs.to(device), avg_latent, T=args.T)
+        avg_img = model.render(avg_xT, avg_latent, T=args.T)
 
-    #     ori = (imgs + 1) / 2
-    #     for index in range(len(imgs)):
-    #         file_name = data.paths[batch_indices[index]]
-    #         save_image(ori[index], f'{log_dir}/recon/orig_{file_name}')
-    #         save_image(avg_xT[index], f'{log_dir}/recon/avg_xT_{file_name}')
-    #         save_image(avg_img[index], f'{log_dir}/recon/avg_recon_{file_name}')
+        ori = (imgs + 1) / 2
+        for index in range(len(imgs)):
+            file_name = data.paths[batch_indices[index]]
+            save_image(ori[index], f'{log_dir}/recon/orig_{file_name}')
+            save_image(avg_xT[index], f'{log_dir}/recon/avg_xT_{file_name}')
+            save_image(avg_img[index], f'{log_dir}/recon/avg_recon_{file_name}')
 
 if not os.path.exists(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}'):
     os.mkdir(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}')    
@@ -329,7 +327,6 @@ with torch.set_grad_enabled(True):
         loss_clip = (2 - clip_loss_func(forward_recon_imgs[1:], args.src_txt, backward_imgs, args.trg_txt)) / 2
         loss_clip = -torch.log(loss_clip)
         loss_id = torch.mean((1 - cond[0].dot(start_cond[0])))
-        #loss_l1 = nn.L1Loss()(forward_recon_imgs[1:], backward_imgs)
         loss_l1 = nn.L1Loss()(forward_recon_imgs[1:] * start_mask, backward_imgs * start_mask)  
 
         loss = args.clip_loss_w * loss_clip + args.id_loss_w * loss_id + args.l1_loss_w * loss_l1
@@ -352,7 +349,6 @@ with torch.no_grad():
         mask = model.ema_model.encoder.face_mask(imgs.to(device), for_video=True)
         
         avg_cond2 = l2_norm(avg_cond + args.scale * editing_step)
-        #avg_cond2 = avg_cond + args.scale * editing_step
 
         avg_latent2 = model.ema_model.encoder.forward_with_id(avg_cond2.expand(len(imgs), -1), imgs.to(device))
 
