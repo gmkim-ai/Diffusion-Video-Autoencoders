@@ -133,7 +133,7 @@ Set `conf.vox_path` in `templates.py` to the data path. Data path should be orga
     └── test
         └── (same as train)
 ```
-All images in dataset should be FFHQ-like algined and cropped frames.
+All images in dataset should be FFHQ-like aligned and cropped frames.
 
 Then, train the model with:
 ```
