@@ -1,3 +1,10 @@
+echo "Creating empty directory.."
+mkdir checkpoints
+mkdir checkpoints/diffusion_video_autoencoder
+mkdir checkpoints/diffusion_video_autoencoder_cls
+mkdir editing_CLIP
+mkdir editing_classifier
+
 echo "Downloading model checkpoints.."
 wget "https://drive.google.com/uc?export=download&id=1J_eAs5-KWn--kmcqx5S-QjVPskTczTMU" -O "checkpoints/diffusion_video_autoencoder/latent.pkl"
 curl -sc /tmp/cookie "https://drive.google.com/uc?export=download&id=1Q6z7Wmo9xve5SgfDJExohpDSSNi4QxcH" > /dev/null
