@@ -293,4 +293,4 @@ with torch.no_grad():
             video_frames.append(paste_bg_pasted_image)
             paste_bg_pasted_image.save(f'{log_dir}/{args.attribute}_{args.scale:.2f}/paste_final_avg_mani_{file_name}')                      
 
-    imageio.mimwrite(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}/out.mp4', video_frames, fps=20, output_params=['-vf', 'fps=20'])
+    imageio.mimwrite(f'{log_dir}/{args.attribute}_{args.scale:.2f}/out.mp4', video_frames, fps=20, output_params=['-vf', 'fps=20'])
