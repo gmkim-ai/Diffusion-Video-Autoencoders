@@ -167,7 +167,7 @@ parser.add_argument("--src_txt", type=str, default="face", required=True, help="
 parser.add_argument("--trg_txt", type=str, default="face with beard", required=True, help="target text for editing")
 parser.add_argument("--lr", type=float, default=0.0020, help="learning rate")
 parser.add_argument("--scale", type=float, default=1.0, help="scale factor of editing step")
-parser.add_argument("--clip_loss_w", type=float, default=3, help="weight for clip loss")
+parser.add_argument("--clip_loss_w", type=int, default=3, help="weight for clip loss")
 parser.add_argument("--id_loss_w", type=int, default=5, help="weight for id loss")
 parser.add_argument("--l1_loss_w", type=int, default=5, help="weight for l1 loss")
 parser.add_argument("--video_path", type=str, default="sample_video", required=True, help="path to video frames")
