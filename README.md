@@ -105,7 +105,7 @@ python editing_classifier.py --attribute PREDEFINED_ATTRIBUTE \
 For example:
 ```
 python editing_classifier.py --attribute "Mustache" \
-                             --scale 0.4 \ 
+                             --scale 0.25 \ 
                              --normalize \
                              --video_path "sample_video"
 ```
