@@ -146,19 +146,19 @@ To run classifier-based editing, you need statistics information `latent.pkl` fo
 
 Set `conf.eval_path` in `templates.py` to the model_checkpoint `checkpoints/diffusion_video_autoencoder/last.ckpt`. 
 
-Then, get the `checkpoints/diffusion_video_autoencoder/latent.pkl` with:
+Then, remove the `checkpoints/diffusion_video_autoencoder/latent.pkl` which is downloaded and get new one with:
 ```
 python run_eval.py
 ```
 
 **3. (Optional) Train the classifier**
 
-Train the classifier and get the `checkpoints/diffusion_video_autoencoder_cls/last.ckpt` with:
+Same as above, remove the `checkpoints/diffusion_video_autoencoder_cls/last.ckpt` which is downloaded and get new one with:
 ```
 python run_cls.py
 ```
 
-`editing_classifier.py` use this `checkpoints/diffusion_video_autoencoder_cls/last.ckpt` checkpoint.
+`editing_classifier.py` will use this `checkpoints/diffusion_video_autoencoder_cls/last.ckpt` checkpoint.
 
 
 ## Credits
