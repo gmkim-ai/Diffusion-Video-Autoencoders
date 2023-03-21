@@ -302,8 +302,8 @@ with torch.no_grad():
             save_image(avg_xT[index], f'{log_dir}/recon/avg_xT_{file_name}')
             save_image(avg_img[index], f'{log_dir}/recon/avg_recon_{file_name}')
 
-if not os.path.exists(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}'):
-    os.mkdir(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}')    
+if not os.path.exists(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}_scale{args.scale}'):
+    os.mkdir(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}_scale{args.scale}')    
 
 edit_cond = nn.Parameter(start_cond.clone())
 optimizer = torch.optim.Adam([edit_cond], weight_decay=0, lr=args.lr)
@@ -333,7 +333,7 @@ with torch.set_grad_enabled(True):
         loss.backward()
         print(f"CLIP opt: loss_clip: {loss_clip:.3f}, loss_id: {loss_id:.3f}, loss_l1: {loss_l1:.3f}")
         if (it + 1) % 100 == 0:
-            save_image((make_grid(backward_imgs) + 1) / 2, f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}/backward_img_clip_{args.trg_txt.replace(" ", "_")}_{it+1}_ngen{args.n_train_step}.png')
+            save_image((make_grid(backward_imgs) + 1) / 2, f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}_scale{args.scale}/backward_img_clip_{args.trg_txt.replace(" ", "_")}_{it+1}_ngen{args.n_train_step}.png')
         optimizer.step()
 
 editing_step = edit_cond - start_cond
@@ -356,13 +356,13 @@ with torch.no_grad():
 
         for index in range(len(imgs)):
             file_name = data.paths[batch_indices[index]]
-            # save_image(avg_img[index], f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}/avg_mani_{file_name}')
+            # save_image(avg_img[index], f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}_scale{args.scale}/avg_mani_{file_name}')
             paste_bg = avg_img[index].unsqueeze(0) * mask[index].unsqueeze(0) + ((imgs[index].to(device).unsqueeze(0) + 1) / 2 * (1 - mask[index].unsqueeze(0)))
-            save_image(paste_bg[0], f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}/paste_avg_mani_{file_name}')
+            save_image(paste_bg[0], f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}_scale{args.scale}/paste_avg_mani_{file_name}')
             paste_bg_crop = tensor2pil((paste_bg[0] * 2) - 1)
             paste_bg_pasted_image = paste_image(inverse_transforms[batch_indices[index]], paste_bg_crop, orig_images[batch_indices[index]])
             paste_bg_pasted_image = paste_bg_pasted_image.convert('RGB')
             video_frames.append(paste_bg_pasted_image)
-            paste_bg_pasted_image.save(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}/paste_final_avg_mani_{file_name}') 
+            paste_bg_pasted_image.save(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}_scale{args.scale}/paste_final_avg_mani_{file_name}') 
 
-imageio.mimwrite(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}/out.mp4', video_frames, fps=20, output_params=['-vf', 'fps=20'])
+imageio.mimwrite(f'{log_dir}/{args.attribute}_{args.lr:.4f}_id{args.id_loss_w}_l1{args.l1_loss_w}_scale{args.scale}/out.mp4', video_frames, fps=20, output_params=['-vf', 'fps=20'])
