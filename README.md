@@ -2,7 +2,7 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2212.02802-b31b1b.svg)](https://arxiv.org/abs/2212.02802)
 
-[[Project Page](https://diff-video-ae.github.io/)]
+### [[Project Page](https://diff-video-ae.github.io/)]
 > **Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding**<br>
 > Gyeongman Kim, Hajin Shim, Hyunsu Kim, Yunjey Choi, Junho Kim, Eunho Yang <br>
 
