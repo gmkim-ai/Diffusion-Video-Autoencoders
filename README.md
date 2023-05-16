@@ -179,10 +179,12 @@ https://github.com/cunjian/pytorch_face_landmark
 If you make use of our work, please cite our paper:
 
 ```
-@inproceedings{kim2022diffusion,
-      title={Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding},
-      author={Kim, Gyeongman and Shim, Hajin and Kim, Hyunsu and Choi, Yunjey and Kim, Junho and Yang, Eunho},
-      booktitle={IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 
-      year={2023}
+@InProceedings{Kim_2023_CVPR,
+    author    = {Kim, Gyeongman and Shim, Hajin and Kim, Hyunsu and Choi, Yunjey and Kim, Junho and Yang, Eunho},
+    title     = {Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2023},
+    pages     = {6091-6100}
 }
 ```
