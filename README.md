@@ -1,8 +1,9 @@
 # Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding (CVPR 2023)
 
 [![arXiv](https://img.shields.io/badge/arXiv-2212.02802-b31b1b.svg)](https://arxiv.org/abs/2212.02802)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10017256.svg)](https://doi.org/10.5281/zenodo.10017256)
 
-### [[Project Page](https://diff-video-ae.github.io/)]
+## [[Project Page](https://diff-video-ae.github.io/)]
 > **Diffusion Video Autoencoders: Toward Temporally Consistent Face Video Editing via Disentangled Video Encoding**<br>
 > Gyeongman Kim, Hajin Shim, Hyunsu Kim, Yunjey Choi, Junho Kim, Eunho Yang <br>
 
