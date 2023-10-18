@@ -174,6 +174,14 @@ PyTorch Face Landmark implementation:
 https://github.com/cunjian/pytorch_face_landmark  
 
 
+
+## Acknowledgement
+```
+This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) 
+(No.2019-0-00075, Artificial Intelligence Graduate School Program(KAIST))
+```
+
+
 ## Citation
 
 If you make use of our work, please cite our paper:
